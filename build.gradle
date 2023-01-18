@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.7'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'com.vtw.dna'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.apache.camel.springboot:camel-spring-boot-dependencies:3.20.1'
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.apache.camel.springboot:camel-spring-boot-starter'
+    implementation 'org.apache.camel:camel-endpointdsl'
+    implementation 'org.apache.camel:camel-yaml-dsl'
+    implementation 'org.apache.camel:camel-debug'
+    implementation 'org.apache.camel.springboot:camel-hdfs-starter'
+    implementation 'org.apache.camel.springboot:camel-spark-starter'
+    implementation 'org.apache.camel.springboot:camel-hbase-starter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+task copyToLib(type: Copy) {
+    into "$buildDir/libs/libs"
+    from configurations.runtimeClasspath.files
+}
+
+jar {
+    archiveClassifier = ''
+    manifest {
+        attributes 'Main-Class': 'com.vtw.dna.NewDnaApplication'
+        attributes 'Class-Path': configurations.runtimeClasspath.files.collect { 'libs/' + it.getName() }.join(' ')
+    }
+}
+
+bootJar {
+    enabled = false
+}

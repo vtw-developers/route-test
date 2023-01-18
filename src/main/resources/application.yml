@@ -1,0 +1,9 @@
+reload-dir: route
+camel:
+  springboot:
+    main-run-controller: true
+    routes-include-pattern: file:${reload-dir}/**/*.yaml
+    routes-reload-directory: ${reload-dir}
+    routes-reload-directory-recursive: true
+    routes-reload-pattern: "*.yaml"
+    routes-reload-enabled: true

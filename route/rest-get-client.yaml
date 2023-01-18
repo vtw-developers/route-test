@@ -1,0 +1,12 @@
+- route:
+    id: test-rest-client-get
+    auto-startup: true
+    from:
+      uri: timer://test-rest-client-get?period=5000
+      steps:
+      - loop:
+          constant: 3
+          steps:
+            - setBody:
+                simple: ${body}C
+      - log: ${body}

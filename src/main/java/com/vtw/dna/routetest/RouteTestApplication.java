@@ -1,0 +1,13 @@
+package com.vtw.dna.routetest;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class RouteTestApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(RouteTestApplication.class, args);
+    }
+
+}
